@@ -61,7 +61,7 @@ The DegenToken smart contract, written in Solidity, utilizes the OpenZeppelin li
 11. Under "Environment," select "Injected Provider - MetaMask."
 12. Check if MetaMask is connected to the Avalanche Fuji Testnet.
 13. To deploy, click the "Deploy" button.
-14. To check the deployed contract, enter `0xd19714f9637939eF61D2ab6eE9bE27213E563A8E` next to the "At Address" button and click it.
+14. To check the deployed contract, enter `0xc2f1d4e6d74f892D8b6a92c5425D58accaB30900` next to the "At Address" button and click it.
 
 ## Help
 
