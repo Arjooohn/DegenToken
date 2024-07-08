@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
@@ -10,22 +9,19 @@ import "hardhat/console.sol";
 
 contract DegenToken is ERC20, Ownable, ERC20Burnable {
 
-    struct StoreItem {
-        uint requiredTokens;
-        string itemName;
-        bool isRedeemed;
+    struct Product {
+        uint costInTokens;
+        string name;
+        bool redeemed;
     }
 
-    StoreItem[] private storeItems;
+    Product[] private products;
 
-    constructor()
-    ERC20("Degen", "DGN")
-    Ownable()
-    {
-        storeItems.push(StoreItem(55, "League of Legends - Shaco NFT", false));
-        storeItems.push(StoreItem(12, "Apple NFT", false));
-        storeItems.push(StoreItem(18, "Toy Story Merch", false));
-        storeItems.push(StoreItem(26, "Arm NFT", false));
+    constructor() ERC20("Degen", "DGN") Ownable(msg.sender) {
+        products.push(Product(10, "Roblox - Basta NFT", false));
+        products.push(Product(11, "PS5 NFT", false));
+        products.push(Product(12, "Twice Merch", false));
+        products.push(Product(13, "Sword NFT", false));
     }
 
     function mint(address to, uint256 amount) public onlyOwner {
@@ -40,36 +36,36 @@ contract DegenToken is ERC20, Ownable, ERC20Burnable {
         return this.balanceOf(msg.sender);
     }
 
-    function transferTokens(address _receiver, uint256 _value) external {
-        require(balanceOf(msg.sender) >= _value, "Current DGN tokens are not enough to cover the transfer!");
-        approve(msg.sender, _value);
-        transferFrom(msg.sender, _receiver, _value);
+    function transferTokens(address receiver, uint256 value) external {
+        require(balanceOf(msg.sender) >= value, "Insufficient DGN tokens for transfer!");
+        approve(msg.sender, value);
+        transferFrom(msg.sender, receiver, value);
     }
 
-    function burnTokens(uint256 _value) external {
-        require(balanceOf(msg.sender) >= _value, "Current DGN tokens are not enough to cover burn of the requested amount!");
-        burn(_value);
+    function burnTokens(uint256 value) external {
+        require(balanceOf(msg.sender) >= value, "Insufficient DGN tokens to burn!");
+        burn(value);
     }
 
-    function redeemTokens(uint8 input) external payable returns (string memory) {
-        require(input >= 0 || input <= 3, "Invalid Input");
-        require(storeItems[input].isRedeemed == false, "This item is already redeemed!");
-        require(balanceOf(msg.sender) >= storeItems[input].requiredTokens, "Current DGN tokens are not enough to cover the redeem!");
+    function redeemTokens(uint8 index) external payable returns (string memory) {
+        require(index >= 0 && index < 4, "Invalid selection");
+        require(!products[index].redeemed, "This product has already been redeemed!");
+        require(balanceOf(msg.sender) >= products[index].costInTokens, "Insufficient DGN tokens to redeem this product!");
 
-        approve(msg.sender, storeItems[input].requiredTokens);
-        transferFrom(msg.sender, owner(), storeItems[input].requiredTokens);
-        storeItems[input].isRedeemed = true;
+        approve(msg.sender, products[index].costInTokens);
+        transferFrom(msg.sender, owner(), products[index].costInTokens);
+        products[index].redeemed = true;
 
-        return string.concat(storeItems[input].itemName ," has been redeemed!");
+        return string.concat(products[index].name, " has been redeemed!");
     }
 
-    function showStoreItems() public view returns (string memory) {
-        string memory itemPrintStr = "";
+    function displayProducts() public view returns (string memory) {
+        string memory productList = "";
 
         for (uint i = 0; i < 4; i++) {
-            itemPrintStr = string.concat(itemPrintStr, "   ", Strings.toString(i), ". ", storeItems[i].itemName);
+            productList = string.concat(productList, "   ", Strings.toString(i), ". ", products[i].name);
         }
 
-        return itemPrintStr;
+        return productList;
     }
 }
