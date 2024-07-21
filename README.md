@@ -8,35 +8,14 @@ The DegenToken smart contract, written in Solidity, utilizes the OpenZeppelin li
 
 ### Key Features
 
-1. **Minting Tokens:**
-   - The platform owner can mint new DegenTokens, allowing Degen Gaming to reward players based on in-game achievements and activities.
-   - **Function:** `mint(address to, uint256 amount)`
-   - **Access:** Only the contract owner can mint new tokens.
-
-2. **Transferring Tokens:**
-   - Players can transfer their DegenTokens to other players, fostering a dynamic in-game economy where tokens can be traded for goods, services, or other tokens.
-   - **Function:** `transferTokens(address _receiver, uint256 _value)`
-   - **Requirement:** The sender must have a sufficient balance of DegenTokens.
-
-3. **Redeeming Tokens:**
-   - Players can redeem DegenTokens for exclusive items in the in-game store. Each item has a specific token cost and can only be redeemed once.
-   - **Function:** `redeemTokens(uint8 input)`
-   - **Requirement:** The player must have enough tokens to cover the cost and the item must not have been previously redeemed.
-
-4. **Checking Token Balance:**
-   - Players can check their DegenToken balance at any time, ensuring transparency and informed decision-making about spending and saving.
-   - **Function:** `getBalance()`
-   - **Output:** Returns the player's token balance.
-
-5. **Burning Tokens:**
-   - Players can burn their DegenTokens if they no longer need them, reducing the total token supply and potentially increasing the value of remaining tokens.
-   - **Function:** `burnTokens(uint256 _value)`
-   - **Requirement:** The player must have enough tokens to cover the burn amount.
-
-6. **Store Items:**
-   - The smart contract includes a predefined list of store items that can be redeemed with tokens. Each item has a unique identifier, name, token cost, and redemption status.
-   - **Function:** `showStoreItems()`
-   - **Output:** Returns a list of available store items with details.
+1. **Mint Tokens**: Only the owner can mint new tokens. Use the mint function with the recipient address and amount.
+2. **Redeem Tokens**: Burn tokens from a specified address using the redeem function.
+3. **Burn Tokens**: Burn tokens from your own balance using the burn function.
+4. **Add Pokemon**: Add new Pokémon to the contract using the addPokemon function (only callable by the owner).
+5. **Catch Pokemon**: Use a Pokéball to catch a Pokémon with the catchPokemon function.
+6. **Buy Pokeball**: Purchase a Pokéball using the buyPokeball function.
+7. **Get Player Pokemons**: Retrieve the list of Pokémon owned by a player with getPlayerPokemons.
+8. **Get Player Pokeballs**: Retrieve the list of Pokéballs owned by a player with getPlayerPokeballs.
 
 ## Getting Started
 
