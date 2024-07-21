@@ -31,7 +31,8 @@ contract DegenToken is ERC20, Ownable {
         // Initialize some default Pokeballs
         pokeballs.push(Pokeball("Poke Ball", 50));
         pokeballs.push(Pokeball("Great Ball", 75));
-        pokeballs.push(Pokeball("Ultra Ball", 90));
+        pokeballs.push(Pokeball("Ultra Ball", 80));
+        pokeballs.push(Pokeball("Premier Ball", 90));
         pokeballs.push(Pokeball("Master Ball", 100));
     }
 
